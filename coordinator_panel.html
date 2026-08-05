@@ -39,17 +39,7 @@
     <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-4">
-
-
-
-
-
-
-
-
-
-                <!-- link add #1 ----------------------------------------------------------->
-                <a href="http://">
+                <a href="http://index.html">
                 <!-- RBF Recreated Premium Vector Logo from image -->
                 <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1 relative shadow-inner">
                     <img src="/src/icon/logo_circular.png" alt="RBF">
@@ -299,12 +289,7 @@
             document.getElementById('modalDesignation').innerText = member.design;
             document.getElementById('modalYear').innerText = member.year;
 
-
-
-            
-            // <!-- link add #2 -->.........................................................................................
-
-            const verificationUrl = `https://rbf-registry.org/verify?id=${formattedId}`;
+            const verificationUrl = `https://rbf-central-website.vercel.app/coordinator_panel.html?id=${formattedId}`;
             
             const qrContainer = document.getElementById('qrcode');
             qrContainer.innerHTML = '';
