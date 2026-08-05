@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBF Council Registry & Member Directory</title>
+    <link rel="shortcut icon" href="/src/icon/logo_core.png" type="image/x-icon">
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Fraunces', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dot-grid {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen dot-grid antialiased">
+
+    <!-- Top Premium Navbar -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+
+
+
+
+
+
+
+
+
+                <!-- link add #1 ----------------------------------------------------------->
+                <a href="http://">
+                <!-- RBF Recreated Premium Vector Logo from image -->
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-1 relative shadow-inner">
+                    <img src="/src/icon/logo_circular.png" alt="RBF">
+                </div>
+                <div>
+                    <h1 class="font-heading font-extrabold text-xl tracking-tight text-slate-900">Revive Blood Foundation</h1>
+                    <h4 class="text-xs font-bold tracking-wider text-red-600">CoNSBN, Dhaka</h4>
+                </div>
+                </a>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 bg-emerald-50 border border-emerald-200/60 px-4 py-2 rounded-full text-emerald-700 font-medium text-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Secure Cloud Database Active
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Hero Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <h2 class="font-heading font-extrabold text-4xl sm:text-5xl tracking-tight text-slate-900 mb-4">Official Verification Portal</h2>
+            <p class="text-slate-600 text-lg leading-relaxed">Interactive council board and certified member identity lookup matrix. Select any member card to generate or verify secure QR tracking links.</p>
+        </div>
+
+        <!-- Filter and Search Dashboard Controls -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div class="w-full md:w-96 relative">
+                <input type="text" id="searchInput" oninput="filterMembers()" placeholder="Search by name, role or registration ID..." class="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900 transition-all placeholder:text-slate-400">
+            </div>
+            <div class="flex flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end">
+                <button onclick="filterRole('All')" class="role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-slate-900 text-white shadow-sm">All Roles</button>
+                <button onclick="filterRole('Ambassador')" class="role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Ambassadors</button>
+                <button onclick="filterRole('Coordinator')" class="role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Coordinators</button>
+                <button onclick="filterRole('Representative')" class="role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Representatives</button>
+                <button onclick="filterRole('Volunteer')" class="role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50">Volunteers</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Member Matrix Grid -->
+        <div id="memberGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- JavaScript dynamically populates all 80 items here seamlessly -->
+        </div>
+    </main>
+
+    <!-- Dynamic Premium Verification Pop-Up Modal -->
+    <div id="profileModal" class="fixed inset-0 z-50 invisible flex items-center justify-center p-4 transition-all duration-300">
+        <!-- Backdrop -->
+        <div onclick="closeModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+        <!-- Modal Card Content -->
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-100 transform scale-95 opacity-0 transition-all duration-300 z-10" id="modalCard">
+            <!-- Header Pattern -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2 rounded-full transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+                <span class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 font-semibold text-xs tracking-wider uppercase px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-3">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Verified Profile
+                </span>
+                <h3 id="modalName" class="font-heading font-extrabold text-2xl tracking-tight">---</h3>
+                <p id="modalId" class="text-xs text-slate-400 font-mono tracking-widest mt-1">---</p>
+            </div>
+            <!-- Core Metadata Profile Body -->
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100 text-sm">
+                    <div>
+                        <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-0.5">Designation</span>
+                        <strong id="modalDesignation" class="text-slate-800 font-semibold">---</strong>
+                    </div>
+                    <div>
+                        <span class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-0.5">Academic Cohort</span>
+                        <strong id="modalYear" class="text-slate-800 font-semibold">---</strong>
+                    </div>
+                </div>
+
+                <!-- Live Generated QR Verification Slot -->
+                <div class="flex flex-col items-center justify-center py-2">
+                    <div id="qrcode" class="p-3 bg-white border border-slate-200/80 shadow-md rounded-2xl transition-all hover:scale-105 duration-300"></div>
+                    <p class="text-xs font-medium text-slate-500 mt-4 text-center px-6">Scan QR with any mobile camera to securely lookup credential states on the live registry grid.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Interactive Operational Logic Script -->
+    <script>
+        const membersData = [
+            { sl: 1, name: "MD SHAHIDUJJAMAN MIFTAH", design: "Campus Ambassador", year: "BSc 4th" },
+            { sl: 2, name: "JANNATUL FERDOUS", design: "Co-Campus Ambassador", year: "BSc 4th" },
+            { sl: 3, name: "SADIKUN NAHER", design: "Co-Campus Ambassador", year: "MW 3rd" },
+            { sl: 4, name: "ANIMESH TALUKDAR", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 5, name: "HASIB HOSSEN", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 6, name: "MD LITON HOSEN", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 7, name: "FAHAD MAHMUD", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 8, name: "SOUVIK BAKSI", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 9, name: "TANVIR HASAN SAGOR", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 10, name: "IFTEKHAR IBNE LIMON", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 11, name: "MD MERAJUL ISLAM", design: "Co-Ordinator", year: "BSc 4th" },
+            { sl: 12, name: "MD TAOHID ALAM TOHA", design: "Organizing Representative", year: "BSc 3rd" },
+            { sl: 13, name: "MD NAIMUR RAHMAN", design: "Database Representative", year: "BSc 3rd" },
+            { sl: 14, name: "MST SURAIYA YASMIN", design: "Health Representative", year: "BSc 3rd" },
+            { sl: 15, name: "MST MASUMA MEHEJABIN", design: "Health Representative", year: "MW 2nd" },
+            { sl: 16, name: "ASIBUL HASAN", design: "Treasurer", year: "BSc 2nd" },
+            { sl: 17, name: "MONERA AKTHER LIZA", design: "Group Representative", year: "BSc 2nd" },
+            { sl: 18, name: "FAHMIDA AKTER FIMA", design: "Batch Representative", year: "MW 1st" },
+            { sl: 19, name: "MD ABDULLAH AL MAMUN", design: "Media Representative", year: "Bsc 1st" },
+            { sl: 20, name: "TAJKIA MOWLA", design: "Media Representative", year: "Bsc 1st" },
+            { sl: 21, name: "JINIA SULTANA", design: "Batch Representative", year: "MW 1st(N)" },
+            { sl: 22, name: "BIJAYA MISTRY", design: "Batch Representative", year: "MSc" },
+            { sl: 23, name: "ANJULI ROY", design: "Volunteer", year: "MSc" },
+            { sl: 24, name: "MST SALMA KHATUN", design: "Volunteer", year: "BSc 4th" },
+            { sl: 25, name: "PRIYANKA RANI", design: "Volunteer", year: "BSc 4th" },
+            { sl: 26, name: "MINARA AKTER SUMI", design: "Volunteer", year: "BSc 4th" },
+            { sl: 27, name: "JARIN TASNIM NILA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 28, name: "MARIYA RAHMAN MIM", design: "Volunteer", year: "BSc 4th" },
+            { sl: 29, name: "SAMANTA ISLAM", design: "Volunteer", year: "BSc 4th" },
+            { sl: 30, name: "MOURIN SULTANA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 31, name: "SAYLA SULTANA TAMANNA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 32, name: "RIMU AHMED", design: "Volunteer", year: "BSc 4th" },
+            { sl: 33, name: "MANTASHA YEASMIN", design: "Volunteer", year: "BSc 4th" },
+            { sl: 34, name: "RUKAIYA KHATUN", design: "Volunteer", year: "BSc 4th" },
+            { sl: 35, name: "MST ANIKA SULTANA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 36, name: "SOHANA BINTE SOHEL RUBINA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 37, name: "TRINA BHOWMIK", design: "Volunteer", year: "BSc 4th" },
+            { sl: 38, name: "HASIBA AFRIN", design: "Volunteer", year: "BSc 4th" },
+            { sl: 39, name: "MST TANJINA AKTER", design: "Volunteer", year: "BSc 4th" },
+            { sl: 40, name: "SAHIDA AKTER", design: "Volunteer", year: "BSc 4th" },
+            { sl: 41, name: "JANNAT AKTER PRIYA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 42, name: "TASLIMA AKTER PINKY", design: "Volunteer", year: "BSc 4th" },
+            { sl: 43, name: "MOSA RABEYA AKTER", design: "Volunteer", year: "BSc 4th" },
+            { sl: 44, name: "SUMONA AKTER", design: "Volunteer", year: "BSc 4th" },
+            { sl: 45, name: "SAYEDA ELMA SIDDIKA", design: "Volunteer", year: "BSc 4th" },
+            { sl: 46, name: "MST ZARIN TASNIM HASHI", design: "Volunteer", year: "BSc 4th" },
+            { sl: 47, name: "KADIZA AKTER BITHY", design: "Volunteer", year: "BSc 4th" },
+            { sl: 48, name: "FARIA ISLAM", design: "Volunteer", year: "BSc 4th" },
+            { sl: 49, name: "SUMAIYA SHEIKH", design: "Volunteer", year: "BSc 4th" },
+            { sl: 50, name: "SAIEADUS SALEHIN RIFAT", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 51, name: "PARTHO BAIRAGI", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 52, name: "JHUMA RANI SUTRADHAR", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 53, name: "SOMAIYA AKTER", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 54, name: "AKLIMA AKTER", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 55, name: "SHARMIN AKTER", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 56, name: "TANJILA AKTHER SHAGORIKA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 57, name: "MOSAMMAT URMI AKTER", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 58, name: "RADIA TUT TASFIA RAFA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 59, name: "MAISHA MALIHA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 60, name: "MST AFSARE AKTER TISHA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 61, name: "MST AFRIN SULTANA SIMLA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 62, name: "MOST KARISHMA SHARMIN KAKOLY", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 63, name: "SILMA SUBHA TUBA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 64, name: "SAFIA ISRAK LIA", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 65, name: "SANJIDA RAHMAN MIM", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 66, name: "NURJAHAN ISLAM NITU", design: "Volunteer", year: "BSc 3rd" },
+            { sl: 67, name: "MST. HASNA AKTER", design: "Volunteer", year: "MW 2nd" },
+            { sl: 68, name: "RIYA AKTER", design: "Volunteer", year: "MW 2nd" },
+            { sl: 69, name: "ARIFA SULTANA", design: "Volunteer", year: "MW 2nd" },
+            { sl: 70, name: "KANIJ FATEMA KONA", design: "Volunteer", year: "BSc 2nd" },
+            { sl: 71, name: "MAHIRA ADON NEPUN", design: "Volunteer", year: "BSc 2nd" },
+            { sl: 72, name: "FAHMIDA KAYSER", design: "Volunteer", year: "BSc 2nd" },
+            { sl: 73, name: "PRISHNI RANI PAUL PAYEL", design: "Volunteer", year: "BSc 1st" },
+            { sl: 74, name: "SADIA ISLAM", design: "Volunteer", year: "BSc 1st" },
+            { sl: 75, name: "SHIRIN AKTER", design: "Volunteer", year: "BSc 1st" },
+            { sl: 76, name: "SHETHI KARMAKAR DIPTI", design: "Volunteer", year: "BSc 1st" },
+            { sl: 77, name: "ARPITA DAS COITI", design: "Volunteer", year: "BSc 1st" },
+            { sl: 78, name: "PRIYA DAS", design: "Volunteer", year: "BSc 1st" },
+            { sl: 79, name: "PURNIMA PANDAY", design: "Volunteer", year: "BSc 1st" },
+            { sl: 80, name: "ABDULLAH AL RAFI", design: "Volunteer", year: "BSc 1st" }
+        ];
+
+        let currentRoleFilter = "All";
+        let qrCodeInstance = null;
+
+        function renderCards() {
+            const grid = document.getElementById('memberGrid');
+            grid.innerHTML = '';
+
+            membersData.forEach(member => {
+                const formattedId = `RBF-2026-${String(member.sl).padStart(3, '0')}`;
+                
+                const card = document.createElement('div');
+                card.className = "member-card bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-300 cursor-pointer flex flex-col justify-between group";
+                card.dataset.name = member.name.toLowerCase();
+                card.dataset.design = member.design.toLowerCase();
+                card.dataset.id = formattedId;
+                card.onclick = () => openModal(member);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-mono font-semibold tracking-wider text-slate-400 bg-slate-50 border border-slate-100 px-2.5 py-1 rounded-md group-hover:bg-white group-hover:border-slate-200 transition-all">${formattedId}</span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
+                        </div>
+                        <h4 class="font-heading font-bold text-base tracking-tight text-slate-900 group-hover:text-red-600 transition-colors line-clamp-1 mb-1">${member.name}</h4>
+                        <p class="text-xs font-semibold text-slate-500">${member.design}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+                        <span>Cohort: <strong class="font-medium text-slate-600">${member.year}</strong></span>
+                        <span class="text-slate-900 font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            Verify 
+                            <svg class="w-3 h-3 transform translate-x-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMembers() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.member-card');
+
+            cards.forEach(card => {
+                const name = card.dataset.name;
+                const design = card.dataset.design;
+                const id = card.dataset.id.toLowerCase();
+                
+                const matchesQuery = name.includes(query) || design.includes(query) || id.includes(query);
+                const matchesRole = currentRoleFilter === "All" || design.includes(currentRoleFilter.toLowerCase());
+
+                if (matchesQuery && matchesRole) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        function filterRole(role) {
+            currentRoleFilter = role;
+            
+            const buttons = document.querySelectorAll('.role-tab');
+            buttons.forEach(btn => {
+                if (btn.innerText.toLowerCase().includes(role.toLowerCase()) || (role === "All" && btn.innerText === "ALL ROLES")) {
+                    btn.className = "role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-slate-900 text-white shadow-sm";
+                } else {
+                    btn.className = "role-tab px-4 py-2 rounded-xl text-xs font-semibold tracking-wide uppercase transition-all bg-white border border-slate-200 text-slate-600 hover:bg-slate-50";
+                }
+            });
+            filterMembers();
+        }
+
+        function openModal(member) {
+            const formattedId = `RBF-2026-${String(member.sl).padStart(3, '0')}`;
+            
+            document.getElementById('modalName').innerText = member.name;
+            document.getElementById('modalId').innerText = formattedId;
+            document.getElementById('modalDesignation').innerText = member.design;
+            document.getElementById('modalYear').innerText = member.year;
+
+
+
+            
+            // <!-- link add #2 -->.........................................................................................
+
+            const verificationUrl = `https://rbf-registry.org/verify?id=${formattedId}`;
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            qrCodeInstance = new QRCode(qrContainer, {
+                text: verificationUrl,
+                width: 160,
+                height: 160,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            window.history.pushState({ id: formattedId }, '', `?id=${formattedId}`);
+
+            const modal = document.getElementById('profileModal');
+            const card = document.getElementById('modalCard');
+            modal.classList.remove('invisible');
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('profileModal');
+            const card = document.getElementById('modalCard');
+            
+            card.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('invisible');
+                window.history.pushState({}, '', window.location.pathname);
+            }, 300);
+        }
+
+        function handleDeepLinking() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeId = urlParams.get('id');
+            if (activeId) {
+                const targetMember = membersData.find(m => `RBF-2026-${String(m.sl).padStart(3, '0')}` === activeId);
+                if (targetMember) {
+                    openModal(targetMember);
+                }
+            }
+        }
+
+        window.onload = () => {
+            renderCards();
+            handleDeepLinking();
+        };
+    </script>
+</body>
+</html>
